@@ -35,10 +35,12 @@ _comp_strs:
 	
 _done:
 	sub r9b, r10b
-	movsx rax, r9b
-	cmp rax, 0
+	cmp r9b, 0
 	jl _lower
 	jg _upper
+	mov rax, 0
+	pop rbp
+	ret
 _lower:
 	mov rax, -1
 	pop rbp
