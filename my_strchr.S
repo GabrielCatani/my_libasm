@@ -1,19 +1,19 @@
 section .text
-	global _my_strchr
-_my_strchr:	
+	global my_strchr
+my_strchr:	
 	push rbp
 	mov rbp, rsp
 	mov rax, -1
-_loop:
+loop:
 	inc rax			
 	cmp byte [rdi + rax], sil
-	je _found
+	je found
 	cmp byte [rdi + rax], 0
-	je _exit
-	jmp _loop
-_found:
+	je exit
+	jmp loop
+found:
 	lea rax, [rdi + rax]
 
-_exit:
+exit:
 	pop rbp
 	ret

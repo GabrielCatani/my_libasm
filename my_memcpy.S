@@ -1,25 +1,25 @@
 section .text
-	global _my_memcpy
-_my_memcpy:
+	global my_memcpy
+my_memcpy:
 	push rbp
 	mov rbp, rsp
 	xor rcx, rcx
-_check_len:
+check_len:
 	cmp rsi, 0
-	je _done
+	je done
 	
-_check_overlap:
+check_overlap:
 	cmp rdi, rsi
-	je _done
+	je done
 
-_while_len:
+while_len:
 	cmp rcx, rdx
-	jge _done
+	jge done
 	mov r9b, [rsi + rcx]
 	mov [rdi + rcx], r9b
 	inc rcx
-	jmp _while_len
-_done:
+	jmp while_len
+done:
 	mov rax, rdi
 	pop rbp
 	ret
