@@ -1,28 +1,28 @@
 	;; my_strncmp
-	;; rdi -> str1, rsi -> str2, rdx -> len
+	;; rdi = str1, rsi = str2, rdx = len
 section .text
-	global my_strncmp
+	global my_strncmp	; int my_strncmp(char *str1, char *str2, int len)
 my_strncmp:
-	push rbp
-	mov rbp, rsp
-    xor rax, rax
-	mov rax, -1
+	push rbp		  ; add base pointer to the stack
+	mov rbp, rsp		  ; begin of stack frame
+        xor rax, rax		  ; set rax to zero
+	mov rax, -1		  ; set rax to -1
 loop:
-	inc rax
-	cmp rax, rdx
-	je done
-	mov r8b, byte [rdi + rax]
-	mov r9b, byte [rsi + rax]	
-	cmp r8b, 0
-	je done
-	cmp r9b, 0
-	je done
-	cmp r8b, r9b
-	je loop
-	jne done
+	inc rax			  ; rax++
+	cmp rax, rdx		  ; if rax == len(rdx)
+	je done			  ; yes, return
+	mov r8b, byte [rdi + rax] ; r8b = str1[rax]
+	mov r9b, byte [rsi + rax] ; r9b = str2[rax]
+	cmp r8b, 0		  ; check if str1[rax] == '\0'
+	je done			  ; yes, return
+	cmp r9b, 0		  ; check if str2[rax] == '\0'
+	je done			  ; yes, return
+	cmp r8b, r9b		  ; check if str1[rax] == str2[rax]
+	je loop			  ; yes, loop
+	jne done		  ; no, return
 done:
-	sub r8, r9
-	mov rax, r8
-	pop rbp
-	ret
+	sub r8, r9		  ; str1[rax] -= str2[rax]
+	mov rax, r8		  ; return str1[rax] (rax => return value)
+	pop rbp			  ; end of stack frame
+	ret			  ; return, end of function
 
