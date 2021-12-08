@@ -4,7 +4,7 @@ section .text
 my_read:
 	push rbp
 	mov rbp, rsp
-	mov rax, 0x2000003
+	mov rax, 0
 	syscall
 	cmp rax, -1
 	je error

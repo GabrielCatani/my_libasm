@@ -21,21 +21,8 @@ loop:
 	je loop
 	jne done
 done:
-	xor rax, rax
-	mov al, r8b
-	sub al, r9b
-	cmp al, 0
-	jl less
-	jg more
+	sub r8, r9
+	mov rax, r8
 	pop rbp
 	ret
 
-less:
-	mov rax, -1
-	pop rbp
-	ret
-
-more:
-	mov rax, 1
-	pop rbp
-	ret
