@@ -6,9 +6,10 @@ my_memset:
 	mov rbp, rsp
 	xor rcx, rcx
 while_len:	
-	cmp rcx, rdx
-	jge done
-	mov [rdi + rcx], rsi
+	cmp rdx, 0
+	je done
+	mov byte [rdi + rcx], sil
+    dec rdx
 	inc rcx
 	jmp while_len
 done:
