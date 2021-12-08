@@ -9,38 +9,42 @@ my_strcasecmp:
 	
 check_str1:
 	mov r9b, [rdi + rcx]
-	cmp r9b, 65
-	jl check_str2
-	cmp r9b, 90
-	jg check_str2
-	add r9b, 32
-	
+    cmp r9b, 65
+    jl check_str2
+    cmp r9b, 90
+    jl lower_str1
 check_str2:
-	mov r10b, [rsi + rcx]
-	cmp r10b, 65
-	jl comp_strs
-	cmp r10b, 90
-	jg comp_strs
-	add r10b, 32
-	
-comp_strs:
-	cmp r9b, 0
-	je done
-	cmp r10b, 0
-	je done
-	cmp r9b, r10b
-	jne done
-	inc rcx
-	jmp check_str1
-	
+    mov r10b, [rsi + rcx]
+    cmp r10b, 65
+    jl compare_str
+    cmp r10b, 90
+    jl lower_str2
+compare_str:
+    cmp r9b, r10b
+    jne done
+    cmp r9b, 0
+    je done
+    cmp r10b, 0
+    je done
+    inc rcx
+    jmp check_str1 
+lower_str1:
+    add r9b, 32
+    jmp check_str2
+lower_str2:
+    add r10b, 32
+    jmp compare_str
+    
+
 done:
-	sub r9b, r10b
-	cmp r9b, 0
-	jl lower
-	jg upper
-	mov rax, 0
-	pop rbp
-	ret
+    sub r9b, r10b
+    movsx rax, r9b
+    cmp rax, 0
+    jl lower
+    jg upper
+    pop rbp
+    ret
+
 lower:
 	mov rax, -1
 	pop rbp
